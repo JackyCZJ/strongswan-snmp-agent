@@ -52,69 +52,19 @@ type LoadedChild struct {
 	RemoteTS     []string `vici:"remote-ts"`
 }
 
-//{
-//    <IKE_SA connection name> = {
-//        local_addrs = [
-//            <list of valid local IKE endpoint addresses>
-//        ]
-//        remote_addrs = [
-//            <list of valid remote IKE endpoint addresses>
-//        ]
-//        version = <IKE version as string, IKEv1|IKEv2 or 0 for any>
-//        reauth_time = <IKE_SA reauthentication interval in seconds>
-//        rekey_time = <IKE_SA rekeying interval in seconds>
-//
-//        local*, remote* = { # multiple local and remote auth sections
-//            class = <authentication type>
-//            eap-type = <EAP type to authenticate if when using EAP>
-//            eap-vendor = <EAP vendor for type, if any>
-//            xauth = <xauth backend name>
-//            revocation = <revocation policy>
-//            id = <IKE identity>
-//            aaa_id = <AAA authentication backend identity>
-//            eap_id = <EAP identity for authentication>
-//            xauth_id = <XAuth username for authentication>
-//            groups = [
-//                <group membership required to use connection>
-//            ]
-//            certs = [
-//                <certificates allowed for authentication>
-//            ]
-//            cacerts = [
-//                <CA certificates allowed for authentication>
-//            ]
-//        }
-//        children = {
-//            <CHILD_SA config name>* = {
-//                mode = <IPsec mode>
-//                label = <hex encoded security label>
-//                rekey_time = <CHILD_SA rekeying interval in seconds>
-//                rekey_bytes = <CHILD_SA rekeying interval in bytes>
-//                rekey_packets = <CHILD_SA rekeying interval in packets>
-//                local-ts = [
-//                    <list of local traffic selectors>
-//                ]
-//                remote-ts = [
-//                    <list of remote traffic selectors>
-//                ]
-//            }
-//        }
-//    }
-//}
-
 type ListConnection struct {
 	Name        string
-	LocalAddrs  []string         `vici:"local_addrs"`
-	RemoteAddrs []string         `vici:"remote_addrs"`
-	Version     string           `vici:"version"`
-	ReauthTime  int64            `vici:"reauth_time"`
-	RekeyTime   int64            `vici:"rekey_time"`
-	LocalAuths  map[string]Auth  `vici:"local_auth"`
-	RemoteAuths map[string]Auth  `vici:"remote_auth"`
-	Children    map[string]Child `vici:"children"`
+	LocalAddrs  []string             `vici:"local_addrs"`
+	RemoteAddrs []string             `vici:"remote_addrs"`
+	Version     string               `vici:"version"`
+	ReauthTime  int64                `vici:"reauth_time"`
+	RekeyTime   int64                `vici:"rekey_time"`
+	LocalAuths  map[string]ConnAuth  `vici:"local_auth"`
+	RemoteAuths map[string]ConnAuth  `vici:"remote_auth"`
+	Children    map[string]ConnChild `vici:"children"`
 }
 
-type Auth struct {
+type ConnAuth struct {
 	Class      string   `vici:"class"`
 	EapType    string   `vici:"eap_type"`
 	EapVendor  string   `vici:"eap_vendor"`
@@ -129,7 +79,7 @@ type Auth struct {
 	Cacerts    []string `vici:"cacerts"`
 }
 
-type Child struct {
+type ConnChild struct {
 	Mode       string   `vici:"mode"`
 	Label      string   `vici:"label"`
 	RekeyTime  int64    `vici:"rekey_time"`

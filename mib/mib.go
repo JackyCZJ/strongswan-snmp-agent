@@ -28,7 +28,7 @@ var CiKeTunnel = []Section{
 	{Name: "cikeTunRemoteValue", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.7"), Type: pdu.VariableTypeOctetString},
 	{Name: "cikeTunAuthMethod", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.14"), Type: pdu.VariableTypeOctetString},
 	{Name: "cikeTunLifeTime", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.15"), Type: pdu.VariableTypeCounter32},
-	{Name: "cikeTunActiveTime", Oid: value.OID{1, 3, 6, 1, 4, 1, 9, 9, 171, 1, 2, 3, 1, 16}, Type: pdu.VariableTypeCounter32},
+	{Name: "cikeTunActiveTime", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.16"), Type: pdu.VariableTypeCounter32},
 	//{Name: "cikeTunInOctets", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.19"), Type: pdu.VariableTypeCounter32},
 	{Name: "cikeTunInPkts", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.20"), Type: pdu.VariableTypeCounter32},
 	//{Name: "cikeTunInDropPkts", Oid: value.MustParseOID("1.3.6.1.4.1.9.9.171.1.2.3.1.21"), Type: pdu.VariableTypeCounter32},
