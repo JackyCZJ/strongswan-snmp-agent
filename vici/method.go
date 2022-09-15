@@ -3,6 +3,7 @@ package vici
 import (
 	"fmt"
 	"github.com/strongswan/govici/vici"
+	"strings"
 )
 
 type Client struct {
@@ -48,11 +49,30 @@ func (c *Client) ListConn() (ListConnection, error) {
 		}
 		for _, k := range m.Keys() {
 			inbound := m.Get(k).(*vici.Message)
-
 			var conn ListConnection
 			if e := vici.UnmarshalMessage(inbound, &conn); e != nil {
 				fmt.Println(e)
 				continue
+			}
+			for _, k := range inbound.Keys() {
+				if strings.HasPrefix(k, "local-") {
+					a := AuthConf{}
+					if e := vici.UnmarshalMessage(inbound.Get(k).(*vici.Message), &a); e != nil {
+						fmt.Println(e)
+						continue
+					}
+					a.Name = k
+					conn.LocalAuths = append(conn.LocalAuths, a)
+				}
+				if strings.HasPrefix(k, "remote-") {
+					a := AuthConf{}
+					if e := vici.UnmarshalMessage(inbound.Get(k).(*vici.Message), &a); e != nil {
+						fmt.Println(e)
+						continue
+					}
+					a.Name = k
+					conn.RemoteAuths = append(conn.RemoteAuths, a)
+				}
 			}
 			return conn, nil
 		}
